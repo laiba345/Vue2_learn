@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <button class="cancel">取消</button>
+    <!-- 以前script引入的是本地文件，现在引入刚拿到的即可 -->
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js
+    "></script>
+    <script>
+        // 
+        // 获取input元素
+        const inputEl = document.querySelector('input')
+        const cancelBtn = document.querySelector('.cancel')
+        // 监听input元素的输入
+        let counter = 1
+        // 将自己处理的函数，包裹进_debounce() 中即可
+        inputEl.oninput = _.debounce(function() {
+            console.log(`发送网络请求${counter++}`, this.value)
+        }, 200)
+        cancelBtn.onclick = function() {
+            // _.cancel()
+            // 此处用到的是手写
+        }
+
+    </script>
+</body>
+
+</html>

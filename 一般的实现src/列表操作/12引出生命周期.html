@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2 v-if="a">你好啊</h2>
+        <!-- 动态绑定得有冒号，里面一组一组的得用{}, ES6里面新增了简写形式-->
+        <!-- <h2 :style="{opacity: opacity};">欢迎学习Vue</h2> -->
+        <h2 :style="{opacity}">欢迎学习Vue</h2>
+        <!-- 值为undefined在页面上不显示 -->
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    new Vue({
+        // Vue当时给的承诺是只要你敢更改data里面的数据，就重新解析模板
+        el: "#root",
+        data: {
+            a: false,
+            opacity: 1,
+        },
+        methods: {
+
+        },
+        // mount 挂载
+        // Vue完成模板的解析并把初始真实DOM元素放入页面后(挂载完毕) 调用mounted
+        // 初次真实的才叫挂载，以后的就是叫做更新了，
+        mounted() {
+            console.log('mounted', this)
+            setInterval(() => {
+                // data中的属性或者是内容通过this.属性来进行调用
+                this.opacity -= 0.01
+                if (this.opacity <= 0) this.opacity = 1 // 具体取值的时候签完要注意
+            }, 16);
+        },
+    })
+
+    // 通过外部的定时器实现(不推荐)
+    /* setInterval(() => {
+        vm.opacity -= 0.01
+        if (vm.opacity <= 0) vm.opacity = 1 // 具体取值的时候签完要注意
+    }, 16); */
+</script>
+
+
+</html>

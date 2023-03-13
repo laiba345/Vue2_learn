@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>显示格式化</h2>
+        <!-- 计算属性实现 -->
+        <h3>现在是：{{fmtTime}}</h3>
+
+        <!-- methods实现 -->
+        <h3>现在是：{{getFmtTime()}}</h3>
+
+        <!-- 过滤器实现 -->
+        <!-- 实现原理是，读取到time将time传入给timeFormater - 直接返回整个给插值语法即可 -->
+        <h3>现在是：{{time | timeFormater}}</h3>
+
+        <!-- 传参, 一层一层，从左到右进行 -->
+        <h3>现在是：{{time | timeFormater('YYYY_MM_DD') | mySlice}}</h3>
+
+        <h3 :x="msg | mySlice">尚硅谷</h3>
+    </div>
+
+    <div id="root2">
+        <h2>欢迎来到:{{msg | mySlice}}</h2>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    // 全局的过滤器
+    Vue.filter('mySlice', function (value) {
+        return value.slice(0, 4)
+    })
+
+
+    new Vue({
+        el: "#root",
+        data: {
+            time: 1621561377603,  // 时间戳
+            msg: '你好康康呀'
+        },
+        computed: {
+            // 计算出来的内容，在标签中直接显示即可
+            fmtTime() {
+                return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+            }
+        },
+        methods: {
+            getFmtTime() {
+                return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+            }
+        },
+        // 局部过滤器
+        filters: {
+            timeFormater(value, str = 'YYYY年MM月DD日 HH:mm:ss') {
+                // console.log('@', value)
+                // return 'hello'
+                return dayjs(value).format(str)
+            },
+            mySlice(value) {
+                return value.slice(0, 4)
+            }
+        }
+    })
+
+    new Vue({
+        el: "#root2",
+        data: {
+            msg: 'hello Atguigu!',
+        }
+    })
+</script>
+
+
+</html>

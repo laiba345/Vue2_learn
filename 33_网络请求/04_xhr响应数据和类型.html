@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1、创建XMLHttpRequest对象
+        const xhr = new XMLHttpRequest()
+
+        // 2、监听XMLHttpRequest对象状态的变化 - 监听到4种状态
+        xhr.onreadystatechange = function () {
+            // 1、如果状态不是DONE状态，直接返回
+            if(xhr.readyState !== XMLHttpRequest.DONE) return 
+            // 2、确定拿到了数据
+            // console.log(xhr.response)
+            // 通过xhr.response 就可以拿到所有的，以及对应的数据
+            console.log(xhr.response)
+
+        }
+
+        // ！告知xhr获取到的数据的类型  
+        // 这里告知了是'json'格式的数据，在状态接收的时候就不需要进行格式的转换
+        xhr.responseType = "json"
+
+        // 3、配置网络请求   --- 实际开发的时候，使用异步请求，异步请求不会阻塞代码执行
+        xhr.open("get", "http://123.207.32.32:8000/home/multidata")
+        // 4、发送send网络请求
+        xhr.send() 
+    </script>
+</body>
+
+</html>

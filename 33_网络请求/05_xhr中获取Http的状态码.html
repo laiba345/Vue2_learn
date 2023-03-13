@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1、创建XMLHttpRequest对象
+        const xhr = new XMLHttpRequest()
+
+        // 2、监听XMLHttpRequest对象状态的变化 - 监听到4种状态
+        xhr.onreadystatechange = function () {
+            // 1、如果状态不是DONE状态，直接返回
+            if(xhr.readyState !== XMLHttpRequest.DONE) return 
+            // console.log(xhr.status, xhr.statusText) // 200 'OK'
+            // 判断到底是成功还是失败呢？如何进行相应的判断操作呢？
+            
+        }
+        // 监听结果 
+        // 通过status来获取码，通过状态码来获取相应的状态
+        xhr.onload = function() {
+            // 根据http状态码 判断是否请求成功
+            if(xhr.status >= 200 && xhr.status < 300) {
+                console.log(xhr.response)
+            }else {
+                // 通过xhr.status 和 xhr.statusText可以获取相应的状态码操作
+                console.log(xhr.status, xhr.statusText)
+            }
+        }
+
+        // 3、配置网络请求   --- 实际开发的时候，使用异步请求，异步请求不会阻塞代码执行
+        xhr.open("get", "http://123.207.32.32:8000/home/multidata")
+        // 4、发送send网络请求
+        xhr.send() 
+    </script>
+</body>
+
+</html>
