@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1、创建数组的方式一
+        var names = ['why', 'kobe', 'james', 'curry']
+        var products = [
+            { name: '鼠标', price: 18 },
+            { name: '西瓜', price: 19 },
+            { name: '键盘', price: 20 },
+        ]
+
+        // 2、创建数组的方式二：类Array
+        var arr1 = new Array()
+        var arr2 = new Array('abc', 'bac', 'cba') // 不推荐，还不如用第一种方式
+        console.log(arr1, arr2)
+
+        // 3、传入了一个数字，它默认会当成我们要创建一个对应长度的数组
+        var arr3 = new Array(5)
+        console.log(arr3, arr3[0]) //[空属性 * 5] undefined 
+
+        var arr4 = [5]
+        console.log(arr4)
+
+
+
+
+    </script>
+</body>
+
+</html>

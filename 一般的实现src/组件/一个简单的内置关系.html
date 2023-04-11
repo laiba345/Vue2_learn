@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>显示格式化</h2>
+        <school></school>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    // 有原型链是可以直接找的，这一点很关键
+    Vue.prototype.x = 99
+
+    // 第一步、创建school组件
+    const school = Vue.extend({
+        template: `
+            <div>
+                <h2>学校名称：{{schoolName}}</h2>
+                <h2>学校地址：{{address}}</h2>
+                
+                <button @click="showX">点我输出x</button>
+            </div>
+        `,
+
+        /* 
+            el:'root' 
+            - 组件定义时，一定不要写el配置项，因为最终所有的组件都要被一个vm管理，
+            - 由vm决定服务
+        */
+        data() {
+            return {
+                schoolName: '尚硅谷',
+                address: '北京昌平',
+            }
+        },
+        methods: {
+            showX() {
+                alert(this.x)
+            }
+        },
+    })
+
+    // 创建一个vm
+    new Vue({
+        el: '#root',
+        data: {
+            msg: '你好',
+        },
+        components: {
+            school,
+        }
+    })
+
+    // console.log(school.prototype.__proto__ === Vue.prototype) // true
+
+
+    // 原型基础
+    // 定义一个构造函数
+    /* function Demo() {
+        this.a = 1
+        this.b = 2
+    }
+    // 创建一个demo的实例对象
+    const d = new Demo()
+
+    console.log(Demo.prototype) // 函数都有显示原型属性
+
+    // 只要是一个对象，就一定有 隐式原型属性 __proto__
+
+    console.log(d.__proto__) // 函数的实例有隐式原型属性
+
+    console.log(Demo.prototype === d.__proto__) // true
+
+    //  函数的显示原型属性 和 函数的实例的隐式原型属性 都可以指向一个原型对象
+
+    // 程序员通过显示原型属性操作原型对象，追加一个x属性，值为 99 
+    Demo.prototype.x = 99
+    console.log(d.x)
+
+    console.log(d) */
+
+
+</script>
+
+</html>

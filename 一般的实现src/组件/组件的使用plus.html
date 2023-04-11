@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>{{ msg }}</h1>
+        <school></school>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    // 简写形式：就是options
+    const s = {
+        template: `
+            <div>
+                <h2>学校名称:{{ name }}</h2>
+                <h2>学校地址:{{ address }}</h2>
+            </div>
+        `,
+        data() {
+            return {
+                name: '尚硅谷',
+                address: '北京'
+            }
+        }
+    }
+    // 想要注册必须要有一个vm，之前讲过所有的组件都需要经过一个vm的管理
+    new Vue({
+        el: '#root',
+        data: {
+            msg: '欢迎学习Vue'
+        },
+        // 局部注册
+        components: {
+            school: s
+        }
+    })
+
+</script>
+
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <hello></hello>
+        <hr>
+        <xuexiao></xuexiao>
+        <hr>
+        <xuesheng></xuesheng>
+        <hr>
+        <xuesheng></xuesheng>
+    </div>
+
+    <!-- 容器二 -->
+    <div id="root2">
+        <hello></hello>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    // 第一步、创建school组件
+    const school = Vue.extend({
+        template: `
+            <div>
+                <h2>学校名称：{{schoolName}}</h2>
+                <h2>学校地址：{{address}}</h2>
+                
+                <button @click="showName">点我提示学校名</button>
+            </div>
+        `,
+
+        /* 
+            el:'root' 
+            - 组件定义时，一定不要写el配置项，因为最终所有的组件都要被一个vm管理，
+            - 由vm决定服务
+        */
+        data() {
+            return {
+                schoolName: '尚硅谷',
+                address: '北京昌平',
+            }
+        },
+        methods: {
+            showName() {
+                // 浏览器弹出相关内容
+                alert(this.schoolName)
+            }
+        },
+    })
+
+    // 第一步、创建student组件
+    const student = Vue.extend({
+        template: `
+            <div>
+                <h2>学生姓名: {{studentName}}</h2>
+                <h2>学生年龄：{{age}}</h2>
+
+            </div>
+        `,
+        /* 
+            el:'root' 
+            - 组件定义时，一定不要写el配置项，因为最终所有的组件都要被一个vm管理，
+            - 由vm决定服务
+        */
+        data() {
+            return {
+                studentName: '张三',
+                age: 18
+            }
+        }
+    })
+
+    // 第一步，创建hello组件
+    const hello = Vue.extend({
+        template: `
+            <div>
+                <h2>你好啊！{{name}}</h2>
+            </div>
+        `,
+        data() {
+            return {
+                name: 'Tom',
+            }
+        }
+    })
+
+    // 第二部，全局注册组件 全局组件的注册
+    Vue.component('hello', hello)
+
+
+    // 创建vm 
+    new Vue({
+        el: "#root",
+        // 第二步：注册组件(局部注册) 局部组件的注册
+        components: {
+            xuexiao: school,
+            xuesheng: student,
+        }
+    })
+
+    // 再次创建一个vm
+    new Vue({
+        el: '#root2',
+    })
+
+
+    /* let data = {
+        a: 1,
+        b: 2
+    } */
+    /*  const x1 = data
+     const x2 = data */
+
+    /* function data() {
+        return {
+            a: 1,
+            b: 2
+        }
+    }
+
+    const x1 = data()  // 每次调用都会返回一个全新的对象
+    const x2 = data() */
+
+</script>
+
+
+</html>

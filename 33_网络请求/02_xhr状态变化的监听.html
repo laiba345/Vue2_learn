@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1、创建XMLHttpRequest对象
+        const xhr = new XMLHttpRequest()
+
+        // 2、监听XMLHttpRequest对象状态的变化 - 监听到4种状态
+        // 因为这里面本来就是监听到4种状态
+        xhr.onreadystatechange = function () {
+            // 1、如果状态不是DONE状态，直接返回
+            // 其中XMLHttpRequest.DONE的值就是4
+            // 因为监听的时候，就是4种状态
+            if(xhr.readyState !== XMLHttpRequest.DONE) return 
+            // 2、确定拿到了数据
+            console.log(xhr.response)
+
+        }
+
+        // 3、配置网络请求
+        xhr.open("get", "http://123.207.32.32:8000/home/multidata")
+        // 4、发送send网络请求
+        xhr.send() 
+    </script>
+</body>
+
+</html>

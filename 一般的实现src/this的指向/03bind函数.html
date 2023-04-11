@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function foo(name, age, height) {
+            console.log("foo:", this)
+            console.log("参数是:", name, age, height)
+        }
+
+        var obj = { name: 'why' }
+        // 需求：调用foo时总是绑定到obj对象身上（但是不希望obj对象身上有函数）
+        // var bar = foo.bind(obj)
+
+        // 1、基本使用
+        // bar() // this -> obj
+        // bar() 
+
+        // 2、bind函数的其他参数
+        var bar = foo.bind(obj, 'kobe', 18, 1.98)
+        bar() 
+    </script>
+</body>
+
+</html>

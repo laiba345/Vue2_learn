@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 创建xhr对象
+        const xhr = new XMLHttpRequest()
+
+        // 监听数据响应
+        xhr.onload = function () {
+            console.log(xhr.response)
+        }
+
+        // 配置请求
+        xhr.responseType = 'json'
+
+        // 传递参数方式一 : get -> query 会一起协同放在地址栏中，不安全，容易爆露
+        // xhr.open("GET", "http://123.207.32.32:1888/02_param/get?name=kang&age=23")
+
+        // 传递参数方式二：post -> urlencoded
+        // 地址是服务器已经写好了的
+        // xhr.open("post", "http://123.207.32.32:1888/02_param/posturl")
+
+        // const urlParam = "name=kang&age=18"
+        // 发送请求(请求体body) 
+        // 需要告诉服务器应该如何来进行解析操作  使用这种形式要设置请求响应头
+        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        // xhr.send(urlParam) 
+
+        // 传递参数方式三：post -> formdata
+
+        // 传递参数方式四：post -> json  
+        xhr.open("post", "http://123.207.32.32:1888/02_param/postjson")
+        // 在send里面 stringify() 传入一个符合JSON格式的数据结构，将其转换为一个JSON字符串
+        xhr.send(JSON.stringify({ name: 'why', age: 18, height: 1.88 }))
+    </script>
+</body>
+
+</html>

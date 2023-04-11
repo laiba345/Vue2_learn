@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1、创建XMLHttpRequest对象
+        const xhr = new XMLHttpRequest()
+
+        // 2、监听XMLHttpRequest对象状态的变化 -
+        // 想要获取数据的话，通过当前对象在这里做一个监听操作  (宏任务)
+        xhr.onreadystatechange = function () {
+            // console.log(xhr.response) 此处得到的是字符串
+            // console.log(XMLHttpRequest.DONE)
+            if(xhr.readyState !== 4) return 
+            // console.log()
+            // 将字符串转换成JSON对象  
+            // 下面默认是拿到字符串形式的数据，我们需要转换成JSON格式
+            // 将JSON格式的字符串转换成JS数据结构
+            let resJSON = JSON.parse(xhr.response)
+            // console.log(resJSON)
+            // 拿到响应的数据 --- 比如说拿到轮播图数据
+            // const banners = resJSON.data.banner
+
+        }
+
+        // 3、配置网络请求 --- 配置网络请求用xhr.open() 里面配置获取数据的形式，以及url
+        // method:请求的方式（get/post/delete/put）
+        // url:请求的地址 -- 浏览器帮我们发送请求
+        xhr.open("get", "http://123.207.32.32:8000/home/multidata")
+        // 4、发送send网络请求
+        xhr.send() 
+    </script>
+</body>
+
+</html>

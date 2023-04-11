@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input class="file" type="file">
+    <button class="upload">上传文件</button>
+
+    <script>
+        // xhr/fetch   xhr可以监听上传进度，但是fetch不可以
+        const uploadBtn = document.querySelector(".upload")
+        uploadBtn.onclick = async function () {
+            // 前端收集文件都是通过表单来进行实现操作的
+            // 输入表单，其实也是表单的一种
+            const fileEl = document.querySelector(".file")
+            const file = fileEl.files[0]
+            // console.log(file)
+
+            // 但是服务器肯定不接收这么一个东西，服务器接收的是一个表单
+            const formdata = new FormData()
+            formdata.append("avatar", file)
+            // 发送fetch请求
+            const response = await fetch("http://123.207.32.32:1888/02_param/upload", {
+                method:"post", 
+                body: formdata
+            })
+            const res = await response.json()
+            console.log("res:", res)
+        }
+    </script>
+</body>
+
+</html>
