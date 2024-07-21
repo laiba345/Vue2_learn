@@ -171,3 +171,175 @@
 - Vue.set的使用
     - 其中，通过Vue.set(this.student,'sex','男')
 	或者是this.$set(this.student,'sex','男')都可以改变相关属性
+
+## 收集表单数据
+- 收集表单数据：
+    - 若：<input type="text"/>，则v-model收集的是value值，用户输入的就是value值。
+    - 若：<input type="radio"/>，则v-model收集的是value值，且要给标签配置value值。
+    - 若：<input type="checkbox"/>
+        - 1.没有配置input的value属性，那么收集的就是checked（勾选 or 未勾选，是布尔值）
+        - 2.配置input的value属性:
+            - (1)v-model的初始值是非数组，那么收集的就是checked（勾选 or 未勾选，是布尔值）
+            - (2)v-model的初始值是数组，那么收集的的就是value组成的数组
+    - 备注：v-model的三个修饰符：
+        - lazy：失去焦点再收集数据
+        - number：输入字符串转为有效的数字
+        - trim：输入首尾空格过滤
+    
+## 过滤器
+- 定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）。
+- 语法：
+    - 1.注册过滤器：Vue.filter(name,callback) 或 new Vue{filters:{}}
+    - 2.使用过滤器：{{ xxx | 过滤器名}}  或  v-bind:属性 = "xxx | 过滤器名"
+- 备注：
+    - 1.过滤器也可以接收额外参数、多个过滤器也可以串联
+    - 2.并没有改变原本的数据, 是产生新的对应的数据
+
+## 内置指令
+- 重点关注 v-once
+    - 1.v-once所在节点在初次动态渲染后，就视为静态内容了。
+	- 2.以后数据的改变不会引起v-once所在结构的更新，可以用于优化性能。
+- 操作DOM的命令
+    - 选择DOM元素
+        - document.getElementById
+        - document.getElementsByClassName
+        - document.getElementsByTagName
+        - document.querySelector
+        - document.querySelectorAll
+    - 创建和插入元素
+        - 创建新元素
+            - document.createElement("div")
+        - 插入元素
+            - parentElement.appendChild(newElement); 
+                - 插入到某个父元素的最后一个子元素
+                - 插入到某个特定子元素之前
+        - 插入或修改HTML内容
+            - element.innerHTML = "<p>Some HTML content</p>";
+    - 修改元素属性和内容
+        - 设置或获取元素属性
+            - element.setAttribute("class", "newClassName");
+            - var className = element.getAttribute("class");
+        - 修改元素的文本内容
+            - element.textContent = "New text content";
+    - 删除元素
+        - 移除元素
+            - element.remove();
+        - 从父元素中移除子元素
+            - parentElement.removeChild(childElement);
+    - 操作元素的样式
+        - 修改元素的样式
+            - element.style.color = "red";
+            - element.style.backgroundColor = "blue";
+        - 添加或移除CSS类
+            - element.classList.add("newClass");
+            - element.classList.remove("oldClass");
+            - element.classList.toggle("activeClass");
+    - 事件处理
+        - 添加事件监听器
+        ```
+        element.addEventListener("click", function() {
+            console.log("Element clicked!");
+        });
+        ```
+        - 移除事件监听器
+        ```
+        function handleClick() {
+            console.log("Element clicked!");
+        }
+        element.removeEventListener("click", handleClick);
+        ```
+
+## 生命周期
+- 生命周期
+    - 别称
+        - 生命周期回调函数、生命周期函数、生命周期钩子。
+    - 是什么
+        - Vue在关键时刻帮我们调用的一些特殊名称的函数。
+    - 生命周期函数的名字不可更改，但函数的具体内容是程序员根据需求编写的。
+    - 生命周期函数中的this指向是vm 或 组件实例对象。
+- 分析生命周期：了解不同生命周期函数做了什么事情
+- 总结生命周期
+    - 常用的生命周期钩子
+        - 1.mounted: 发送ajax请求、启动定时器、绑定自定义事件、订阅消息等【初始化操作】。
+		- 2.beforeDestroy: 清除定时器、解绑自定义事件、取消订阅消息等【收尾工作】。
+    - 关于销毁Vue实例
+        - 1.销毁后借助Vue开发者工具看不到任何信息。
+		- 2.销毁后自定义事件会失效，但原生DOM事件依然有效。
+		- 3.一般不会在beforeDestroy操作数据，因为即便操作数据，也不会再触发更新流程了
+
+## 非单文件组件
+- 定义
+    - 用纯JS对象来定义组件，而不是使用.vue文件的组件    
+    - 非单文件组件通常使用Vue.js的Vue.component方法或使用纯js对象定义
+- 1. 使用Vue.component定义全局组件
+- 2. 使用纯js对象定义局部组件
+- 优点
+    - 简单易用
+    - 无需构建工具
+- 缺点
+    - 不适合复杂组件
+    - 缺少内置功能
+    - 不易调试
+- 基本使用
+    - Vue中使用组件的三大步骤：
+        - 一、定义组件(创建组件)
+        - 二、注册组件
+        - 三、使用组件(写组件标签)
+
+	- 一、如何定义一个组件？
+        - 使用Vue.extend(options)创建，其中options和new Vue(options)时传入的那个options几乎一样，但也有点区别；
+        - 区别如下：
+            - 1.el不要写，为什么？ ——— 最终所有的组件都要经过一个vm的管理，由vm中的el决定服务哪个容器。
+            - 2.data必须写成函数，为什么？ ———— 避免组件被复用时，数据存在引用关系。
+        - 备注：使用template可以配置组件结构。
+
+	- 二、如何注册组件？
+        - 1.局部注册：靠new Vue的时候传入components选项
+        - 2.全局注册：靠Vue.component('组件名',组件)
+
+	- 三、编写组件标签：
+		- <school></school>
+- 几个注意点
+    - 关于组件名
+        - 一个单词组成：
+            - 第一种写法(首字母小写)：school
+            - 第二种写法(首字母大写)：School
+        - 多个单词组成：
+            - 第一种写法(kebab-case命名)：my-school
+            - 第二种写法(CamelCase命名)：MySchool (需要Vue脚手架支持)
+        - 备注：
+            - (1).组件名尽可能回避HTML中已有的元素名称，例如：h2、H2都不行。
+            - (2).可以使用name配置项指定组件在开发者工具中呈现的名字。  
+    - 2.关于组件标签:
+        - 第一种写法：<school></school>
+        - 第二种写法：<school/>
+        - 备注：不用使用脚手架时，<school/>会导致后续组件不能渲染。
+    - 3.一个简写方式：
+        const school = Vue.extend(options) 可简写为：const school = options
+
+- 组件的嵌套
+
+- 关于VueComponent
+    - 1.school组件本质是一个名为VueComponent的构造函数，且不是程序员定义的，是Vue.extend生成的。
+
+    - 2.我们只需要写<school/>或<school></school>，Vue解析时会帮我们创建school组件的实例对象，
+        - 即Vue帮我们执行的：new VueComponent(options)。
+
+    - 3.特别注意：每次调用Vue.extend，返回的都是一个全新的VueComponent！！！！
+
+    - 4.关于this指向：
+        - (1).组件配置中：
+            - data函数、methods中的函数、watch中的函数、computed中的函数 它们的this均是【VueComponent实例对象】。
+        - (2).new Vue(options)配置中：
+            - data函数、methods中的函数、watch中的函数、computed中的函数 它们的this均是【Vue实例对象】。
+
+    - 5.VueComponent的实例对象，以后简称vc（也可称之为：组件实例对象）。
+        Vue的实例对象，以后简称vm。
+
+- 一个重要的内置关系
+    - VueComponent.prototype.__proto__ === Vue.prototype
+    - 为什么要有这个关系
+        - 让组件实例对象（vc）可以访问到 Vue原型上的属性、方法
+
+## 单文件组件
+- 单文件组件通常包含一个.vue文件中，里面包含了模版(HTML)、脚本(JS)和样式(CSS)
